@@ -1,5 +1,5 @@
 # AChecker
-A wrapper for the AChecker API. [AChecker](http://www.atutor.ca/achecker/) API.  You will need an [API KEY](http://achecker.ca/documentation/web_service_api.php) to use the service.
+A wrapper for the [AChecker](http://www.atutor.ca/achecker/) API.  You will need an [API KEY](http://achecker.ca/documentation/web_service_api.php) to use the service.
 
 ## Install via NPM!
 ```
@@ -56,7 +56,6 @@ The available options are:
       resultType: "Error",
       lineNum: "2",
       columnNum: "1",
-      columnNum: "<a href=\"http://achecker.ca/checker/suggestion.php?id=232\" onclick=\"AChecker.popup('http://achecker.ca/checker/suggestion.php?id=232'); return false;\" title=\"Suggest improvements on this error message\" target=\"_new\">Document does not validate.</a>",
       errorSourceCode: "<html>\n<head> <title>Example Domain</title> <meta charset=\"utf-8\" /> <meta http-equiv=\" ...",
       repair: "Validate the document using a validator service."
     },
@@ -64,8 +63,6 @@ The available options are:
       resultType: "Potential Problem",
       lineNum: "4",
       columnNum: "5",
-      columnNum: "<a href=\"http://achecker.ca/checker/suggestion.php?id=54\" onclick=\"AChecker.popup('http://achecker.ca/checker/suggestion.php?id=54'); return false;\" title=\"Suggest improvements on this error message\" target=\"_new\"><code>title</code> might not describe the document.</a>",
-      errorSourceCode: "<title>Example Domain</title>",
       sequenceID: "4_5_54",
       decisionPass: "<code>title</code> describes the document.",
       decisionFail: "<code>title</code> does not describe the document."
@@ -74,7 +71,6 @@ The available options are:
       resultType: "Potential Problem",
       lineNum: "44",
       columnNum: "5",
-      columnNum: "<a href=\"http://achecker.ca/checker/suggestion.php?id=42\" onclick=\"AChecker.popup('http://achecker.ca/checker/suggestion.php?id=42'); return false;\" title=\"Suggest improvements on this error message\" target=\"_new\"><code>h1</code> may be used for formatting.</a>",
       errorSourceCode: "<h1>Example Domain</h1>",
       sequenceID: "44_5_42",
       decisionPass: "This <code>h1</code> element is really a section header.",
@@ -84,7 +80,6 @@ The available options are:
       resultType: "Potential Problem",
       lineNum: "47",
       columnNum: "8",
-      columnNum: "<a href=\"http://achecker.ca/checker/suggestion.php?id=19\" onclick=\"AChecker.popup('http://achecker.ca/checker/suggestion.php?id=19'); return false;\" title=\"Suggest improvements on this error message\" target=\"_new\">Link text may not be meaningful.</a>",
       errorSourceCode: "<a href=\"http://www.iana.org/domains/example\">More information...</a>",
       sequenceID: "47_8_19",
       decisionPass: "Link text is meaningful when read alone (out of context).",
@@ -94,7 +89,6 @@ The available options are:
       resultType: "Likely Problem",
       lineNum: "47",
       columnNum: "8",
-      columnNum: "<a href=\"http://achecker.ca/checker/suggestion.php?id=18\" onclick=\"AChecker.popup('http://achecker.ca/checker/suggestion.php?id=18'); return false;\" title=\"Suggest improvements on this error message\" target=\"_new\">Anchor that opens new window may be missing warning.</a>",
       errorSourceCode: "<a href=\"http://www.iana.org/domains/example\">More information...</a>",
       sequenceID: "47_8_18",
       decisionPass: "There is a warning to user that anchor opens a new window.",
@@ -120,6 +114,3 @@ The available options are:
     - `repair`: How to repair, only presented when resultType is "Error".
     - `decisionPass`: The actual text message of the pass decision. Only presented when resultType is "Likely Problem" or "Potential Problem"
     - `decisionFail`: The actual text message of the fail decision. Only presented when resultType is "Likely Problem" or "Potential Problem"
-    - `sequenceID`:
-    - `lineNum`:
-    - `lineNum`:

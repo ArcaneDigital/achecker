@@ -1,6 +1,6 @@
 {
   "name": "achecker",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "API wrapper for achecker.ca",
   "main": "index.js",
   "scripts": {

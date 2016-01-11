@@ -51,19 +51,24 @@ var achecker = function(options, callback) {
       callback('No sequence id is given', null);
   })
   .on('complete', function(result) {
-
-    parseString(result, function (err, json) {
+    parseString(result,{
+      trim: true,
+      normalize: true,
+      explicitArray: false
+    },
+     function (err, json) {
      var summary = {
-      sessionID: json.resultset.summary[0].sessionID[0],
-      errors: json.resultset.summary[0].NumOfErrors[0],
-      likelyProblems: json.resultset.summary[0].NumOfLikelyProblems[0],
-      potentialProblems: json.resultset.summary[0].NumOfPotentialProblems[0]
+      sessionID: json.resultset.summary.sessionID,
+      errors: parseInt(json.resultset.summary.NumOfErrors),
+      likelyProblems: parseInt(json.resultset.summary.NumOfLikelyProblems),
+      potentialProblems: parseInt(json.resultset.summary.NumOfPotentialProblems)
      };
-     var results = json.resultset.results[0].result;
+
+     var results = json.resultset.results.result || {};
 
      callback( {
       summary : summary,
-      results: results
+      results: json.resultset.results.result
      });
 
     });

@@ -57,6 +57,7 @@ var achecker = function(options, callback) {
       explicitArray: false
     },
      function (err, json) {
+
      var summary = {
       sessionID: json.resultset.summary.sessionID,
       errors: parseInt(json.resultset.summary.NumOfErrors),
@@ -65,6 +66,13 @@ var achecker = function(options, callback) {
      };
 
      var results = json.resultset.results.result || {};
+     results.forEach(function(item, i, r){
+      if(item.errorMsg){
+        var url = item.errorMsg.match(/href="([^"]*)"/);
+        var text = item.errorMsg.match(/">([^"]*)<\/a>/);
+        r[i].errorMsg = {url: url[1], message: text[1]};
+      }
+     });
 
      callback( {
       summary : summary,

@@ -1,5 +1,5 @@
 # AChecker
-A wrapper for the [AChecker](http://www.atutor.ca/achecker/) API.  You will need an [API KEY](http://achecker.ca/documentation/web_service_api.php) to use the service.
+A wrapper for the [AChecker](http://achecker.ca/) API.  You will need an [API KEY](http://achecker.ca/documentation/web_service_api.php) to use the service.
 
 ## Install via NPM!
 ```
@@ -39,9 +39,25 @@ The available options are:
     - WCAG2-AA: abbreviation of guideline wcag-2.0-l2;
     - WCAG2-AAA: abbreviation of guideline wcag-2.0-l3.
 
+## Response Format
+
+* `summary`: The summary element of the validation response.
+    - `status`: Can be one of these values: FAIL, CONDITIONAL PASS, PASS. FAIL is set when there is/are known problem(s). CONDITIONAL PASS is set when there is no known problems but there is/are likely or potential problem(s). PASS is set when there is no problems found, OR, there is no known problems and likely/potential problems have pass decisions made on.
+    - `errors`: Counts the number of known problems.
+    - `likelyProblems`: Counts the number of likely problems.
+    - `potentialProblems`: Counts the number of potential problems.
+* `result`:
+    - `resultType`: Can be one of these values: _Error_, _Likely Problem_, _Potential Problem_.
+    - `lineNum`: Within the source code of the validated document, refers to the line where the error was detected.
+    - `columnNum`: Within the source code of the validated document, refers to the column of the line where the error was detected.
+    - `errorMsg`: An object with two properties, a link to more information about the error and a string of the error message.
+    - `errorSourceCode`: The line of the source where the error/problem was detected.
+    - `repair`: How to repair, only presented when resultType is "Error".
+    - `decisionPass`: The actual text message of the pass decision. Only presented when resultType is "Likely Problem" or "Potential Problem"
+    - `decisionFail`: The actual text message of the fail decision. Only presented when resultType is "Likely Problem" or "Potential Problem"
 
 
-## Example Response
+## Response Example
 
 ```js
 {
@@ -56,6 +72,10 @@ The available options are:
       resultType: "Error",
       lineNum: "2",
       columnNum: "1",
+      errorMsg: {
+        url: "http://achecker.ca/checker/suggestion.php?id=232",
+        message: "Document does not validate."
+      },
       errorSourceCode: "<html>\n<head> <title>Example Domain</title> <meta charset=\"utf-8\" /> <meta http-equiv=\" ...",
       repair: "Validate the document using a validator service."
     },
@@ -63,6 +83,10 @@ The available options are:
       resultType: "Potential Problem",
       lineNum: "4",
       columnNum: "5",
+      errorMsg: {
+        url: "http://achecker.ca/checker/suggestion.php?id=54",
+        message: "<code>title</code> might not describe the document."
+      },
       sequenceID: "4_5_54",
       decisionPass: "<code>title</code> describes the document.",
       decisionFail: "<code>title</code> does not describe the document."
@@ -71,6 +95,10 @@ The available options are:
       resultType: "Potential Problem",
       lineNum: "44",
       columnNum: "5",
+      errorMsg: {
+        url: "http://achecker.ca/checker/suggestion.php?id=42",
+        message: "<code>h1</code> may be used for formatting."
+      },
       errorSourceCode: "<h1>Example Domain</h1>",
       sequenceID: "44_5_42",
       decisionPass: "This <code>h1</code> element is really a section header.",
@@ -80,6 +108,10 @@ The available options are:
       resultType: "Potential Problem",
       lineNum: "47",
       columnNum: "8",
+      errorMsg: {
+        url: "http://achecker.ca/checker/suggestion.php?id=19",
+        message: "Link text may not be meaningful."
+      },
       errorSourceCode: "<a href=\"http://www.iana.org/domains/example\">More information...</a>",
       sequenceID: "47_8_19",
       decisionPass: "Link text is meaningful when read alone (out of context).",
@@ -89,6 +121,10 @@ The available options are:
       resultType: "Likely Problem",
       lineNum: "47",
       columnNum: "8",
+      errorMsg: {
+        url: "http://achecker.ca/checker/suggestion.php?id=18",
+        message: "Anchor that opens new window may be missing warning."
+      },
       errorSourceCode: "<a href=\"http://www.iana.org/domains/example\">More information...</a>",
       sequenceID: "47_8_18",
       decisionPass: "There is a warning to user that anchor opens a new window.",
@@ -98,19 +134,3 @@ The available options are:
 }
 ```
 
-## Response Format
-
-* `summary`: The summary element of the validation response.
-    - `status`: Can be one of these values: FAIL, CONDITIONAL PASS, PASS. FAIL is set when there is/are known problem(s). CONDITIONAL PASS is set when there is no known problems but there is/are likely or potential problem(s). PASS is set when there is no problems found, OR, there is no known problems and likely/potential problems have pass decisions made on.
-    - `errors`: Counts the number of known problems.
-    - `likelyProblems`: Counts the number of likely problems.
-    - `potentialProblems`: Counts the number of potential problems.
-* `result`:
-    - `resultType`: Can be one of these values: _Error_, _Likely Problem_, _Potential Problem_.
-    - `lineNum`: Within the source code of the validated document, refers to the line where the error was detected.
-    - `columnNum`: Within the source code of the validated document, refers to the column of the line where the error was detected.
-    - `errorMsg`: The actual error message.
-    - `errorSourceCode`: The line of the source where the error/problem was detected.
-    - `repair`: How to repair, only presented when resultType is "Error".
-    - `decisionPass`: The actual text message of the pass decision. Only presented when resultType is "Likely Problem" or "Potential Problem"
-    - `decisionFail`: The actual text message of the fail decision. Only presented when resultType is "Likely Problem" or "Potential Problem"

@@ -23,7 +23,7 @@ var achecker = function(options, callback) {
     query: {
       uri: options.uri,
       id: options.key,
-      output: options.output || 'html',
+      output: 'rest',
       guide: options.guide || 'WCAG2-AA',
       offset: options.offset || 0
     },
@@ -51,6 +51,7 @@ var achecker = function(options, callback) {
       callback('No sequence id is given', null);
   })
   .on('complete', function(result) {
+
     parseString(result, function (err, json) {
      var summary = {
       sessionID: json.resultset.summary[0].sessionID[0],
